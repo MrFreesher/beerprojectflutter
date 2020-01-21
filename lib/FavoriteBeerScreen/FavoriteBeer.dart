@@ -3,14 +3,14 @@ import 'package:beerproject/data/model/Beer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class BeerDetail extends StatefulWidget {
+class FavoriteBeerDetail extends StatefulWidget {
   final Beer beer;
-  BeerDetail({this.beer}) {}
+  FavoriteBeerDetail({this.beer}) {}
   @override
-  _BeerDetailState createState() => _BeerDetailState();
+  _FavoriteBeerDetailState createState() => _FavoriteBeerDetailState();
 }
 
-class _BeerDetailState extends State<BeerDetail> {
+class _FavoriteBeerDetailState extends State<FavoriteBeerDetail> {
   DbHelper dbHelper;
   @override
   void initState() {

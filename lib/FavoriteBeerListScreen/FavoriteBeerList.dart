@@ -1,29 +1,22 @@
 import 'package:beerproject/BeerDetailScreen/BeerDetail.dart';
-import 'package:beerproject/FavoriteBeerListScreen/FavoriteBeerList.dart';
+import 'package:beerproject/data/database/db_helper.dart';
 import 'package:beerproject/data/model/Beer.dart';
-import 'package:beerproject/data/network/HttpService.dart';
 import 'package:flutter/material.dart';
 
-class BeerList extends StatefulWidget {
-  BeerList(
-      {Key key, this.title, this.minAbv, this.maxAbv, this.minIbu, this.maxIbu})
-      : super(key: key);
+class FavoriteBeerList extends StatefulWidget {
+  FavoriteBeerList({Key key, this.title}) : super(key: key);
   final String title;
-  final double minAbv;
-  final double maxAbv;
-  final double minIbu;
-  final double maxIbu;
 
   @override
-  _BeerListState createState() => _BeerListState();
+  _FavoriteBeerListState createState() => _FavoriteBeerListState();
 }
 
-class _BeerListState extends State<BeerList> {
-  HttpService httpService;
+class _FavoriteBeerListState extends State<FavoriteBeerList> {
+  DbHelper dbHelper;
   @override
   void initState() {
     super.initState();
-    httpService = new HttpService();
+    dbHelper = new DbHelper();
   }
 
   @override
@@ -31,23 +24,12 @@ class _BeerListState extends State<BeerList> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.favorite),
-            onPressed: () {
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => FavoriteBeerList(
-                        title: "Favorites beer",
-                      )));
-            },
-          )
-        ],
       ),
       body: FutureBuilder(
-        future: httpService.getBeers(),
+        future: dbHelper.getBeers(),
         builder: (BuildContext context, AsyncSnapshot<List<Beer>> snapshot) {
           if (null == snapshot.data || snapshot.data.length == 0) {
-            return Text("Empty data");
+            return Text("Empty");
           }
           if (snapshot.hasData) {
             List<Beer> beers = snapshot.data;
