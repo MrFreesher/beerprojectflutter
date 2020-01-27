@@ -1,5 +1,6 @@
 import 'package:beerproject/data/database/db_helper.dart';
 import 'package:beerproject/data/model/Beer.dart';
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -18,6 +19,15 @@ class _FavoriteBeerDetailState extends State<FavoriteBeerDetail> {
     dbHelper = DbHelper();
   }
 
+  void removeFromFavorites(id) {
+    dbHelper.delete(id);
+    print("usunięto");
+    Flushbar(
+      message: "Usunięto z ulubionych",
+      duration: Duration(seconds: 3),
+    )..show(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,8 +37,7 @@ class _FavoriteBeerDetailState extends State<FavoriteBeerDetail> {
             IconButton(
               icon: Icon(Icons.favorite),
               onPressed: () {
-                this.dbHelper.save(widget.beer);
-                print("Dodano");
+                removeFromFavorites(widget.beer.id);
               },
             )
           ],

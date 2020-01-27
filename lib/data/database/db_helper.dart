@@ -30,13 +30,13 @@ class DbHelper {
   initDB() async {
     io.Directory documentsDirectory = await getApplicationDocumentsDirectory();
     String path = join(documentsDirectory.path, DB_NAME);
-    var db = await openDatabase(path, version: 1, onCreate: _onCreate);
+    var db = await openDatabase(path, version: 2, onCreate: _onCreate);
     return db;
   }
 
   _onCreate(Database db, int version) async {
     await db.execute(
-        "CREATE TABLE $TABLE($ID INTEGER PRIMARY KEY,$NAME TEXT,$TAGLINE TEXT,$DESCRIPTION TEXT,$ABV DOUBLE,$IBU DOUBLE,$FOOD_PAIRING TEXT)");
+        "CREATE TABLE $TABLE($ID INTEGER ,$NAME TEXT,$TAGLINE TEXT,$DESCRIPTION TEXT,$ABV DOUBLE,$IBU DOUBLE,$FOOD_PAIRING TEXT)");
   }
 
   Future<bool> save(Beer beer) async {

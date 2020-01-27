@@ -1,4 +1,4 @@
-import 'package:beerproject/BeerDetailScreen/BeerDetail.dart';
+import 'package:beerproject/FavoriteBeerScreen/FavoriteBeerDetail.dart';
 import 'package:beerproject/data/database/db_helper.dart';
 import 'package:beerproject/data/model/Beer.dart';
 import 'package:flutter/material.dart';
@@ -29,7 +29,7 @@ class _FavoriteBeerListState extends State<FavoriteBeerList> {
         future: dbHelper.getBeers(),
         builder: (BuildContext context, AsyncSnapshot<List<Beer>> snapshot) {
           if (null == snapshot.data || snapshot.data.length == 0) {
-            return Text("Empty");
+            return Center(child: Text("Empty"));
           }
           if (snapshot.hasData) {
             List<Beer> beers = snapshot.data;
@@ -41,7 +41,7 @@ class _FavoriteBeerListState extends State<FavoriteBeerList> {
                         subtitle: Text("${beer.tagline}" ?? "2"),
                         onTap: () => Navigator.of(context).push(
                           MaterialPageRoute(
-                            builder: (context) => BeerDetail(
+                            builder: (context) => FavoriteBeerDetail(
                               beer: beer,
                             ),
                           ),

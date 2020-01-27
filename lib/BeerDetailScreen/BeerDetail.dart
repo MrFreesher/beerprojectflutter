@@ -1,5 +1,6 @@
 import 'package:beerproject/data/database/db_helper.dart';
 import 'package:beerproject/data/model/Beer.dart';
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -18,6 +19,16 @@ class _BeerDetailState extends State<BeerDetail> {
     dbHelper = DbHelper();
   }
 
+  void addToFavorites(beer) {
+    this.dbHelper.save(widget.beer);
+    print("Dodano");
+
+    Flushbar(
+      message: "Dodano do ulubionych",
+      duration: Duration(seconds: 3),
+    )..show(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,8 +38,7 @@ class _BeerDetailState extends State<BeerDetail> {
             IconButton(
               icon: Icon(Icons.favorite),
               onPressed: () {
-                this.dbHelper.save(widget.beer);
-                print("Dodano");
+                addToFavorites(widget.beer);
               },
             )
           ],

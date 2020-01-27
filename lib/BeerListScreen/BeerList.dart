@@ -44,10 +44,15 @@ class _BeerListState extends State<BeerList> {
         ],
       ),
       body: FutureBuilder(
-        future: httpService.getBeers(),
+        future: httpService.getBeers(
+            widget.minAbv, widget.maxAbv, widget.minIbu, widget.maxIbu),
         builder: (BuildContext context, AsyncSnapshot<List<Beer>> snapshot) {
           if (null == snapshot.data || snapshot.data.length == 0) {
-            return Text("Empty data");
+            return Center(
+                child: CircularProgressIndicator(
+              backgroundColor: Colors.cyan,
+              strokeWidth: 5,
+            ));
           }
           if (snapshot.hasData) {
             List<Beer> beers = snapshot.data;
